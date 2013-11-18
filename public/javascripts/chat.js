@@ -13,13 +13,12 @@ function enableUsernameField(enable) {
 function appendNewMessage(msg) {
   var html;
   if (msg.target == "All") {
-    html = "<span class='allMsg'><b>" + msg.source + " :</b> " + msg.message + "</span><br/>"
+    html = "<span class='allMsg'>" + msg.source + " : " + msg.message + "</span><br/>"
   } else {
     // It is a private message to me
-    html = "<span class='privMsg'><b>" + msg.source + " (P) :</b> " + msg.message + "</span><br/>"
+    html = "<span class='privMsg'>" + msg.source + " (P) : " + msg.message + "</span><br/>"
   }
   $('#msgWindow').append(html);
-  $('#msgWindow').scrollTop = $('#msgWindow').scrollHeight;
 }
  
 function appendNewUser(uName, notify) {
@@ -32,8 +31,9 @@ function handleUserLeft(msg) {
     $("select#users option[value='" + msg.userName + "']").remove();
 }
  
-socket = io.connect("http://pacific-peak-1401.herokuapp.com/");
- 
+socket = io.connect("http://localhost:3000");
+//socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
+
 function setFeedback(fb) {
   $('span#feedback').html(fb);
 }
