@@ -19,6 +19,7 @@ function appendNewMessage(msg) {
     html = "<span class='privMsg'>" + msg.source + " (P) : " + msg.message + "</span><br/>"
   }
   $('#msgWindow').append(html);
+  $('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
 }
  
 function appendNewUser(uName, notify) {
@@ -31,8 +32,8 @@ function handleUserLeft(msg) {
     $("select#users option[value='" + msg.userName + "']").remove();
 }
  
-socket = io.connect("http://localhost:3000");
-//socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
+//socket = io.connect("http://localhost:3000");
+socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
 
 function setFeedback(fb) {
   $('span#feedback').html(fb);
