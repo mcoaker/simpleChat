@@ -31,7 +31,7 @@ function handleUserLeft(msg) {
     $("select#users option[value='" + msg.userName + "']").remove();
 }
  
-socket = io.connect("http://localhost:3000");
+socket = io.connect("http://pacific-peak-1401.herokuapp.com/");
  
 function setFeedback(fb) {
   $('span#feedback').html(fb);
