@@ -36,8 +36,8 @@ function handleUserLeft(msg) {
     	$('#msgWindow').append("<span class='adminMsg'>> " + msg.userName + " just left...<br/>");
 }
  
-socket = io.connect("http://localhost:3000");
-//socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
+//socket = io.connect("http://localhost:3000");
+socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
 
 function setFeedback(fb) {
   $('span#feedback').html(fb);
