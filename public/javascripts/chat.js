@@ -21,23 +21,32 @@ function appendNewMessage(msg) {
   }
   $('#msgWindow').append(html);
   $('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
+  $.titleAlert("New message from " + msg.source + "!", {
+    requireBlur:true,
+    stopOnFocus:true,
+    interval:600
+});
 }
  
 function appendNewUser(uName, notify) {
   if (myUserName !== uName)
   	$('select#users').append($('<option></option>').val(uName).html(uName));
-  if (notify && (myUserName !== uName) && (myUserName !== 'All'))
-    $('#msgWindow').append("<span class='adminMsg'>> " + uName + " just joined...<br/>")
+  if (notify && (myUserName !== uName) && (myUserName !== 'All')) {
+    $('#msgWindow').append("<span class='adminMsg'>> " + uName + " just joined...<br/>");
+	$('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
+  }
 }
  
 function handleUserLeft(msg) {
     $("select#users option[value='" + msg.userName + "']").remove();
-    if (!jQuery.isEmptyObject(msg))
-    	$('#msgWindow').append("<span class='adminMsg'>> " + msg.userName + " just left...<br/>");
+    if (!jQuery.isEmptyObject(msg)) {
+      $('#msgWindow').append("<span class='adminMsg'>> " + msg.userName + " just left...<br/>");
+      $('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
+    }
 }
- 
-//socket = io.connect("http://localhost:3000");
-socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
+
+console.log(window.location.origin);
+socket = io.connect(window.location.origin);
 
 function setFeedback(fb) {
   $('span#feedback').html(fb);
@@ -92,6 +101,7 @@ $(function() {
     setCurrentUsers(msg.currentUsers)
     enableMsgInput(true);
     enableUsernameField(false);
+    //$(".collapse").collapse('toggle');
   });
  
   socket.on('error', function(msg) {

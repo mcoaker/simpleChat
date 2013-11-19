@@ -1,11 +1,27 @@
+body {
+  background-color: #f7f7f9;
+}
+
 #msgWindow {
   white-space: pre;
   overflow-y: auto;
   overflow-x: none;
-  width: 600px;
-  height: 200px;
+  height: 250px;
   line-height: 20px;
   font: 14px;
+  word-wrap: break-word;
+  background-color: #ffffff;
+}
+
+#usrWindow {
+  white-space: pre;
+  overflow-y: auto;
+  overflow-x: none;
+  height: 250px;
+  line-height: 20px;
+  font: 14px;
+  word-wrap: break-word;
+  background-color: #ffffff;
 }
  
 .shadow {
@@ -26,4 +42,20 @@
 .adminMsg {
   font: 12px;
   font-style:italic;
+}
+
+.input {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }

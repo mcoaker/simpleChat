@@ -5,7 +5,6 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var chat = require('./routes/chat');
 var socketio = require('socket.io');
 var http = require('http');
@@ -16,7 +15,10 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
+app.enable('view cache');
+app.engine('html', require('./hogan-express.js'));
+//app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -31,7 +33,6 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/chat', chat.main);
 
 var server = app.listen(app.get('port'), function(){
