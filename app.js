@@ -39,6 +39,7 @@ var server = app.listen(app.get('port'), function(){
 });
 var io = socketio.listen(server);
 
+// -------------------------------------------------------------------------------------
 
 var clients = {};
  
@@ -73,13 +74,21 @@ io.sockets.on('connection', function(socket) {
       io.sockets.emit('message',
           {"source": srcUser,
            "message": msg.message,
-           "target": msg.target});
+           "target": msg.target,
+       	   "color": msg.color});
     } else {
-      // Look up the socket id
+      // Look up the socket id (sends one to the target)
       io.sockets.sockets[clients[msg.target]].emit('message',
           {"source": srcUser,
            "message": msg.message,
-           "target": msg.target});
+           "target": msg.target,
+       	   "color": msg.color});
+      // Look up the socket id (and another to the source)
+      io.sockets.sockets[clients[srcUser]].emit('message',
+          {"source": srcUser,
+           "message": msg.message,
+           "target": msg.target,
+       	   "color": msg.color});
     }
   })
   socket.on('disconnect', function() {
@@ -107,7 +116,7 @@ function userNameAvailable(sId, uName) {
   setTimeout(function() {
  
     console.log('Sending welcome msg to ' + uName + ' at ' + sId);
-    io.sockets.sockets[sId].emit('welcome', { "userName" : uName, "currentUsers": JSON.stringify(Object.keys(clients)) });
+    io.sockets.sockets[sId].emit('welcome', { "userName" : uName, "color": get_random_color(), "currentUsers": JSON.stringify(Object.keys(clients)) });
  
   }, 500);
 }
@@ -116,4 +125,14 @@ function userNameAlreadyInUse(sId, uName) {
   setTimeout(function() {
     io.sockets.sockets[sId].emit('error', { "userNameInUse" : true });
   }, 500);
+}
+
+
+function get_random_color() {
+    var letters = '0123456789ABCD'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 13)];
+    }
+    return color;
 }

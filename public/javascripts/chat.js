@@ -1,6 +1,7 @@
 
 var socket;
 var myUserName;
+var myColor;
  
 function enableMsgInput(enable) {
   $('input#msg').prop('disabled', !enable);
@@ -13,27 +14,30 @@ function enableUsernameField(enable) {
 function appendNewMessage(msg) {
   var html;
   if (msg.target == "All") {
-    html = "<span class='allMsg'>" + msg.source + " : " + msg.message + "</span><br/>"
+    html = "<span class='allMsg' style='color:" + msg.color + "'><b>" + msg.source + "</b>: " + msg.message + "</span><br/>"
   } else {
     // It is a private message to me
-    html = "<span class='privMsg'>" + msg.source + " (P) : " + msg.message + "</span><br/>"
+    html = "<span class='privMsg' style='color:" + msg.color + "'><b>"+ msg.source + " (P)</b>: " + msg.message + "</span><br/>"
   }
   $('#msgWindow').append(html);
   $('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
 }
  
 function appendNewUser(uName, notify) {
-  $('select#users').append($('<option></option>').val(uName).html(uName));
+  if (myUserName !== uName)
+  	$('select#users').append($('<option></option>').val(uName).html(uName));
   if (notify && (myUserName !== uName) && (myUserName !== 'All'))
-    $('span#msgWindow').append("<span class='adminMsg'>==>" + uName + " just joined <==<br/>")
+    $('#msgWindow').append("<span class='adminMsg'>> " + uName + " just joined...<br/>")
 }
  
 function handleUserLeft(msg) {
     $("select#users option[value='" + msg.userName + "']").remove();
+    if (!jQuery.isEmptyObject(msg))
+    	$('#msgWindow').append("<span class='adminMsg'>> " + msg.userName + " just left...<br/>");
 }
  
-//socket = io.connect("http://localhost:3000");
-socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
+socket = io.connect("http://localhost:3000");
+//socket = io.connect("http://pacific-peak-1401.herokuapp.com/"); 
 
 function setFeedback(fb) {
   $('span#feedback').html(fb);
@@ -52,7 +56,8 @@ function sendMessage() {
                   "inferSrcUser": true,
                   "source": "",
                   "message": $('input#msg').val(),
-                  "target": trgtUser
+                  "target": trgtUser,
+                  "color": myColor
                 });
     $('input#msg').val("");
 }
@@ -83,6 +88,7 @@ $(function() {
  
   socket.on('welcome', function(msg) {
     setFeedback("<span style='color: green'> Username available. You can begin chatting.</span>");
+    myColor = msg.color;
     setCurrentUsers(msg.currentUsers)
     enableMsgInput(true);
     enableUsernameField(false);

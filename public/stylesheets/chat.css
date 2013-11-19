@@ -2,8 +2,10 @@
   white-space: pre;
   overflow-y: auto;
   overflow-x: none;
-  width: 500px;
+  width: 600px;
   height: 200px;
+  line-height: 20px;
+  font: 14px;
 }
  
 .shadow {
@@ -22,6 +24,6 @@
 }
  
 .adminMsg {
-  font-face: "verdana, helvetica";
-  font-size: 8;
+  font: 12px;
+  font-style:italic;
 }
