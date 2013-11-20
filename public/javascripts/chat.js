@@ -190,5 +190,26 @@ function playSound () {
     multiPlay: false,
   });
 
-  $.ionSound.play("button_tiny");
+  if (soundOn)
+    $.ionSound.play("button_tiny");
 }
+
+var soundOn = true;
+
+$(document).ready(function() {
+
+  $("#son").hide();
+
+  $("#soundControl").bind('click',function(e){
+      if (soundOn) {
+        $("#son").show();
+        $("#soff").hide();
+        soundOn=false;
+      } else {
+        $("#soff").show();
+        $("#son").hide();
+        soundOn=true;
+      }
+      e.preventDefault();
+  });
+});
