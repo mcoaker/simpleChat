@@ -21,11 +21,15 @@ function appendNewMessage(msg) {
   }
   $('#msgWindow').append(html);
   $('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
+
   $.titleAlert("New message from " + msg.source + "!", {
     requireBlur:true,
     stopOnFocus:true,
     interval:600
-});
+    });
+
+  if (msg.source != myUserName)
+    playSound();
 }
  
 function appendNewUser(uName, notify) {
@@ -161,4 +165,30 @@ function updateUsrWindow() {
       $('#usrWindow').append("<img src='images/27.png'/> <span class='users'>" + vals[i] + "</span><br/>");
     }
   }
+}
+ 
+function check_permission() {
+  switch(window.webkitNotifications.checkPermission()) {
+    case 0:
+      // Continue
+      activate($('.needs_permission'));
+      deactivate($('.needs_support'));
+      break;
+    case 2:
+      // Fail
+      $('#blocked').fadeIn();
+      break;
+  }
+}
+
+function playSound () {
+  $.ionSound({
+    sounds: [
+        "button_tiny"
+    ],
+    path: "sounds/", 
+    multiPlay: false,
+  });
+
+  $.ionSound.play("button_tiny");
 }

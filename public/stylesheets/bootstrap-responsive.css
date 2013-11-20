@@ -65,7 +65,7 @@
   display: inherit !important;
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .hidden-desktop {
     display: inherit !important;
   }
@@ -458,7 +458,7 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .row {
     margin-left: -20px;
     *zoom: 1;
@@ -949,7 +949,7 @@
   }
 }
 
-@media (max-width: 979px) {
+@media (max-width: 991px) {
   body {
     padding-top: 0;
   }
