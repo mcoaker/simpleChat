@@ -2,6 +2,10 @@ body {
   background-color: #f7f7f9;
 }
 
+.navbar-inverse .navbar-brand {
+  color: #FFFFFF;
+}
+
 #msgWindow {
   white-space: pre;
   overflow-y: auto;
@@ -35,6 +39,10 @@ body {
 .allMsg {
 }
  
+.users {
+  font-weight: bold;
+}
+
 .privMsg {
   font-style:italic;
 }

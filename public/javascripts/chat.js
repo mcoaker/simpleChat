@@ -31,8 +31,8 @@ function appendNewMessage(msg) {
 function appendNewUser(uName, notify) {
   if (myUserName !== uName) {
   	$('select#users').append($('<option></option>').val(uName).html(uName));
-    updateUsrWindow();
   }
+  updateUsrWindow();
   if (notify && (myUserName !== uName) && (myUserName !== 'All')) {
     $('#msgWindow').append("<span class='adminMsg'>> " + uName + " just joined...<br/>");
 	$('#msgWindow').scrollTop($('#msgWindow')[0].scrollHeight);
@@ -146,16 +146,19 @@ function updateUsrWindow() {
   for(var i = 1, l = lis.length; i < l; i++)
     vals.push(lis[i].innerHTML);
 
-  console.log(vals);
+  vals.push(myUserName);
 
   // Sort it
   vals.sort();
 
-  console.log(vals);
-
   $('#usrWindow').empty();
 
-  for(var i = 0, l = lis.length - 1; i < l; i++) {
-    $('#usrWindow').append("<img src='images/27.png'/> <span class='allMsg'>" + vals[i] + "</span><br/>");
+  for(var i = 0, l = lis.length; i < l; i++) {
+
+    if (myUserName == vals[i]) {
+      $('#usrWindow').append("<img src='images/20.png'/> <span class='users'>" + vals[i] + "</span><br/>");
+    } else {
+      $('#usrWindow').append("<img src='images/27.png'/> <span class='users'>" + vals[i] + "</span><br/>");
+    }
   }
 }
